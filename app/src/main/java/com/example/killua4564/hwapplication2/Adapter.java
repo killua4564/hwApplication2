@@ -18,12 +18,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     public Adapter(Context context, int count) {
         this.count = count;
-        String formatString = String.format("%%0%dd", (int) Math.log10(this.count - 1) + 1);
+        String formatString = String.format("%%0%dd", (int) Math.log10(this.count) + 1);
         this.checkBoxes = new CheckBox[this.count];
         for (int i = 0; i < this.count; i++) {
             final int index = i;
             this.checkBoxes[index] = new CheckBox(context);
-            this.checkBoxes[index].setText(String.format(formatString, index));
+            this.checkBoxes[index].setText(String.format(formatString, index+1));
             this.checkBoxes[index].setChecked(false);
         }
     }
