@@ -14,16 +14,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private int count;
     private CheckBox[] checkBoxes;
-    private ArrayList<String> list = new ArrayList<String>();
 
     public Adapter(Context context, int count) {
         this.count = count;
-        String formatString = String.format("%%0%dd", (int) Math.log10(this.count) + 1);
         this.checkBoxes = new CheckBox[this.count];
         for (int i = 0; i < this.count; i++) {
             final int index = i;
             this.checkBoxes[index] = new CheckBox(context);
-            this.checkBoxes[index].setText(String.format(formatString, index+1));
+            this.checkBoxes[index].setText(String.valueOf(index + 1));
             this.checkBoxes[index].setChecked(false);
         }
     }
@@ -46,13 +44,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return this.count;
     }
 
-    public boolean isListEmpty() {
-        return this.list.size() == 0;
-    }
-
-    public String getList() {
-        Collections.sort(this.list);
-        return String.join(",", this.list);
+    public String getCheckedString() {
+        ArrayList<String> list = new ArrayList<String>();
+        for (CheckBox checkBox : this.checkBoxes) {
+            if (checkBox.isChecked()) {
+                list.add((String) checkBox.getText());
+            }
+        }
+        if (list.size() > 0) {
+            return "You select " + String.join(",", list);
+        } else {
+            return "You select nothing!";
+        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -72,11 +75,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 public void onClick(View view) {
                     CheckBox checkBoxClick = (CheckBox) view;
                     checkBoxes[index].setChecked(checkBoxClick.isChecked());
-                    if (checkBoxClick.isChecked()) {
-                        list.add(text);
-                    } else {
-                        list.remove(text);
-                    }
                 }
             });
         }

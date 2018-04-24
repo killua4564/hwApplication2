@@ -32,11 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.SELECT) {
-            if (this.adapter.isListEmpty()) {
-                Toast.makeText(MainActivity.this, "You select nothing.", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(MainActivity.this, "You select " + this.adapter.getList(), Toast.LENGTH_LONG).show();
-            }
+            Toast.makeText(MainActivity.this, this.adapter.getCheckedString(), Toast.LENGTH_LONG).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
